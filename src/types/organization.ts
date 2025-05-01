@@ -35,10 +35,8 @@ export interface SkillGap {
 }
 
 export interface PlayerPosition {
-  currentPosition: Position;
-  salary: number;
-  yearsInPosition: number;
-  acquiredSkills: string[];
+  position: Position;
+  timeInPosition: number;
 }
 
 // Movement cost calculation
@@ -47,27 +45,20 @@ export function calculateMovementCost(
   to: Position,
   skillGaps: SkillGap[]
 ): number {
-  let totalCost = 0;
+  // Base cost is the level difference
+  let cost = Math.abs(to.level - from.level) * 100;
   
-  // Base cost for any move
-  totalCost += to.level * 1000;
-  
-  // Additional cost based on skill gaps
+  // Add skill gap costs
   for (const requiredSkill of to.requiredSkills) {
     if (!from.requiredSkills.includes(requiredSkill)) {
       const gap = skillGaps.find(
         g => g.fromSkill === from.requiredSkills[0] && g.toSkill === requiredSkill
       );
       if (gap) {
-        totalCost += gap.difficulty * 5000;
+        cost += gap.difficulty * 50;
       }
     }
   }
   
-  // Division change penalty
-  if (from.division !== to.division) {
-    totalCost *= 1.5;
-  }
-  
-  return Math.floor(totalCost);
+  return cost;
 } 

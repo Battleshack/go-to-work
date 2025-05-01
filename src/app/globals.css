@@ -1,36 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaro&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #DADADA;
+  --game-primary: #0F5057;
+  --game-secondary: #0FB0C1;
+  --game-accent: #FF522E;
+  --game-accent-dark: #820B1C;
+  --game-success: #46C97D;
+  --game-success-dark: #1D571F;
+  --game-warning: #F0F557;
+  --game-warning-dark: #9C702B;
+  --game-text: #252525;
+  --game-background-start: #A9F1F7;
+  --game-background-end: #448589;
   --text-primary: #252525;
-  --text-money: #47C97D;
-  --text-points: #F0F558;
-  --button-bg: #FFECC3;
-  --progress-fill: #0FAFC0;
-  --progress-overlay: #E9E977;
-  --position-bg: #FF521D;
+  --text-money: #46C97D;
+  --text-points: #F0F557;
+  --background: linear-gradient(180deg, var(--game-background-start) 0%, var(--game-background-end) 100%);
+  --stats-stroke-thickness: 1rem;
 }
 
-body {
-  background: var(--background);
-  color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply text-game-text;
+    background: var(--background);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 }
 
-/* Text stroke utility classes */
-.text-stroke {
-  -webkit-text-stroke: 4px #252525;
+@layer components {
+  .game-shadow {
+    box-shadow: -3.5rem 1rem 0 0 rgba(7, 80, 87, 0.56);
+  }
+
+  .game-button {
+    @apply bg-game-secondary border-8 border-game-primary rounded-[5rem] text-game-text transition-all hover:opacity-90 active:scale-95;
+  }
+
+  .game-card {
+    @apply rounded-2xl p-6 game-shadow;
+  }
+
+  .game-card-promotion {
+    @apply bg-[#FFF9E3];
+  }
+
+  .game-card-action {
+    @apply bg-game-success border-8 border-game-success-dark;
+  }
+
+  .game-title {
+    @apply text-[6rem] font-black leading-none;
+  }
+
+  .game-subtitle {
+    @apply text-[4rem] font-black leading-none;
+  }
+
+  .game-text {
+    @apply text-[2rem] font-black text-game-text;
+  }
+
+  .career-level-text {
+    @apply text-[4.5rem] font-black leading-[0.8];
+    font-family: 'Jaro', sans-serif;
+    color: var(--game-accent);
+    -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+    text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+    paint-order: stroke fill;
+    -webkit-paint-order: stroke fill;
+    stroke-width: var(--stats-stroke-thickness);
+    stroke: var(--game-accent-dark);
+  }
+
+  .career-level-value {
+    @apply text-[6rem] font-black leading-[0.8];
+    font-family: 'Jaro', sans-serif;
+    color: var(--game-accent);
+    -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+    text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+    paint-order: stroke fill;
+    -webkit-paint-order: stroke fill;
+    stroke-width: var(--stats-stroke-thickness);
+    stroke: var(--game-accent-dark);
+  }
+}
+
+/* Text stroke utility classes using paint-order */
+.text-stroke-level {
+  color: var(--game-accent);
+  -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+  text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+  paint-order: stroke fill;
+  -webkit-paint-order: stroke fill;
+  stroke-width: var(--stats-stroke-thickness);
+  stroke: var(--game-accent-dark);
 }
 
 .text-stroke-money {
-  -webkit-text-stroke: 4px #252525;
-  color: var(--text-money);
+  color: var(--game-success);
+  -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-success-dark);
+  text-stroke: var(--stats-stroke-thickness) var(--game-success-dark);
+  paint-order: stroke fill;
+  -webkit-paint-order: stroke fill;
+  stroke-width: var(--stats-stroke-thickness);
+  stroke: var(--game-success-dark);
 }
 
 .text-stroke-points {
-  -webkit-text-stroke: 4px #252525;
-  color: var(--text-points);
+  color: var(--game-warning);
+  -webkit-text-stroke: var(--stats-stroke-thickness) #6C4E1E;
+  text-stroke: var(--stats-stroke-thickness) #6C4E1E;
+  paint-order: stroke fill;
+  -webkit-paint-order: stroke fill;
+  stroke-width: var(--stats-stroke-thickness);
+  stroke: #6C4E1E;
+}
+
+.text-stroke-tasks {
+  color: var(--game-secondary);
+  -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-primary);
+  text-stroke: var(--stats-stroke-thickness) var(--game-primary);
+  paint-order: stroke fill;
+  -webkit-paint-order: stroke fill;
+  stroke-width: var(--stats-stroke-thickness);
+  stroke: var(--game-primary);
+}
+
+#career-title {
+  padding: 0.75rem 1rem;
+  background-color: #FF521D;
+  border: 0.5rem solid #82001C;
+  border-radius: 2rem;
+  border-top-left-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+}
+
+#career-barometer {
+  width: 5.25rem;
+  height: 43rem;
+  background-color: var(--game-primary);
+  border-radius: 1rem;
+}
+
+.barometer-cell {
+  flex: 1;
+  border-radius: 1rem;
+  transition-property: background-color;
+  transition-duration: 300ms;
+  background-color: white;
+}
+
+.barometer-cell-filled {
+  background-color: var(--game-secondary);
 } 

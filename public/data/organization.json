@@ -35,9 +35,293 @@
                                 }
                             }
                         }
+                    },
+                    "Development": {
+                        "type": "Department",
+                        "children": {
+                            "Innovation": {
+                                "type": "Section",
+                                "children": {
+                                    "Design": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Prototyping": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Engineering": {
+                                "type": "Section",
+                                "children": {
+                                    "Electrical": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Mechanical": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Production": {
+                        "type": "Department",
+                        "children": {
+                            "Manufacturing": {
+                                "type": "Section",
+                                "children": {
+                                    "Assembly": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Equipment Calibration": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Quality Control": {
+                                "type": "Section",
+                                "children": {
+                                    "Process Monitoring": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Defect Analysis": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Logistics": {
+                        "type": "Department",
+                        "children": {
+                            "Supply Chain": {
+                                "type": "Section",
+                                "children": {
+                                    "Vendor Coordination": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Inventory Management": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Distribution": {
+                                "type": "Section",
+                                "children": {
+                                    "Shipment Scheduling": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Route Optimization": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Communication": {
+                        "type": "Department",
+                        "children": {
+                            "Marketing": {
+                                "type": "Section",
+                                "children": {
+                                    "Sales": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Brand Management": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Customer Service": {
+                                "type": "Section",
+                                "children": {
+                                    "Inquiry Handling": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Issue Resolution": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Corporate Affairs": {
+                "type": "Division",
+                "children": {
+                    "Governance": {
+                        "type": "Department",
+                        "children": {
+                            "Legal": {
+                                "type": "Section",
+                                "children": {
+                                    "Policy Development": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Compliance Monitoring": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Risk Oversight": {
+                                "type": "Section",
+                                "children": {
+                                    "Liability": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Risk Analytics": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Board Relations": {
+                        "type": "Department",
+                        "children": {
+                            "Board Communications": {
+                                "type": "Section",
+                                "children": {
+                                    "Stakeholder Briefing": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Board Messaging Strategy": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Board Operations": {
+                                "type": "Section",
+                                "children": {
+                                    "Agenda Coordination": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Minutes & Records Management": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Public Relations": {
+                        "type": "Department",
+                        "children": {
+                            "Corporate Social Responsibility": {
+                                "type": "Section",
+                                "children": {
+                                    "Sustainability Reporting": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Community Engagement": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Crisis Communication": {
+                                "type": "Section",
+                                "children": {
+                                    "Media Response Planning": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Internal Messaging Protocols": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Investor Relations": {
+                        "type": "Department",
+                        "children": {
+                            "Reporting & Disclosure": {
+                                "type": "Section",
+                                "children": {
+                                    "Earnings Call Preparation": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Regulatory Filings": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Shareholder Engagement": {
+                                "type": "Section",
+                                "children": {
+                                    "Institutional Relations": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Proxy Coordination": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Internal Controls": {
+                        "type": "Department",
+                        "children": {
+                            "Audit & Review": {
+                                "type": "Section",
+                                "children": {
+                                    "Operational Audits": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Financial Controls Review": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Ethics & Conduct": {
+                                "type": "Section",
+                                "children": {
+                                    "Code of Conduct Compliance": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Misconduct Investigation Support": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-} 
+}

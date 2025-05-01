@@ -1,10 +1,23 @@
 import { Organization, SkillGap, Position, Department, Division, calculateMovementCost } from '@/types/organization';
 
+function calculatePositionLevel(divisionIndex: number, departmentIndex: number, positionIndex: number): number {
+  // Base level calculation:
+  // - Higher division index means more prestigious division (0-2 levels)
+  // - Higher department index means more senior department (0-3 levels)
+  // - Position index affects seniority within department (1-10 levels)
+  const divisionBonus = Math.floor(divisionIndex * 2);
+  const departmentBonus = Math.floor(departmentIndex * 1.5);
+  const baseLevel = Math.floor(positionIndex * 2) + 1;
+  
+  // Combine all factors and ensure it stays within 1-15 range
+  return Math.min(Math.max(baseLevel + divisionBonus + departmentBonus, 1), 15);
+}
+
 export function parseOrganizationData(data: any): Organization {
   const divisions: Division[] = [];
   
   // Process the Executive Branch which contains all divisions
-  Object.entries(data['Executive Branch'].children).forEach(([divisionName, divisionData]: [string, any]) => {
+  Object.entries(data['Executive Branch'].children).forEach(([divisionName, divisionData]: [string, any], divisionIndex: number) => {
     const division: Division = {
       id: divisionName.toLowerCase().replace(/\s+/g, '-'),
       name: divisionName,
@@ -13,7 +26,7 @@ export function parseOrganizationData(data: any): Organization {
     };
 
     // Process departments within the division
-    Object.entries(divisionData.children).forEach(([deptName, deptData]: [string, any]) => {
+    Object.entries(divisionData.children).forEach(([deptName, deptData]: [string, any], departmentIndex: number) => {
       const department: Department = {
         id: deptName.toLowerCase().replace(/\s+/g, '-'),
         name: deptName,
@@ -23,18 +36,20 @@ export function parseOrganizationData(data: any): Organization {
       };
 
       // Process sections and teams to create positions
+      let positionIndex = 0;
       Object.entries(deptData.children).forEach(([sectionName, sectionData]: [string, any]) => {
         Object.entries(sectionData.children).forEach(([teamName, _]: [string, any]) => {
           const position: Position = {
             id: teamName.toLowerCase().replace(/\s+/g, '-'),
             title: teamName,
-            level: Math.floor(Math.random() * 5) + 1, // Placeholder: assign levels 1-5 randomly
-            baseSalary: 50000 + (Math.random() * 50000), // Placeholder: random salary between 50k-100k
+            level: calculatePositionLevel(divisionIndex, departmentIndex, positionIndex),
+            baseSalary: 50000 + (calculatePositionLevel(divisionIndex, departmentIndex, positionIndex) * 10000), // Salary scales with level
             department: deptName,
             division: divisionName,
             requiredSkills: [teamName] // Each position requires its own skill
           };
           department.positions.push(position);
+          positionIndex++;
         });
       });
 

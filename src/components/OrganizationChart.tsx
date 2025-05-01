@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { useGame } from '@/context/GameContext';
-import { Organization, Position, calculateMovementCost } from '@/types/organization';
+import { Organization, Position, calculateMovementCost, SkillGap } from '@/types/organization';
 
 interface OrganizationChartProps {
   organization: Organization;
-  skillGaps: any[]; // We'll type this properly when you provide the CSV
+  skillGaps: SkillGap[]; // Fixed: Now properly typed
 }
 
 export function OrganizationChart({ organization, skillGaps }: OrganizationChartProps) {
