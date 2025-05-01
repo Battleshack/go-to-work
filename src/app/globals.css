@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #DADADA;
+  --text-primary: #252525;
+  --text-money: #47C97D;
+  --text-points: #F0F558;
+  --button-bg: #FFECC3;
+  --progress-fill: #0FAFC0;
+  --progress-overlay: #E9E977;
+  --position-bg: #FF521D;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Text stroke utility classes */
+.text-stroke {
+  -webkit-text-stroke: 4px #252525;
+}
+
+.text-stroke-money {
+  -webkit-text-stroke: 4px #252525;
+  color: var(--text-money);
+}
+
+.text-stroke-points {
+  -webkit-text-stroke: 4px #252525;
+  color: var(--text-points);
+} 

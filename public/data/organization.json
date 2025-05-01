@@ -1,0 +1,43 @@
+{
+    "Executive Branch": {
+        "type": "Corporation",
+        "children": {
+            "Operation": {
+                "type": "Division",
+                "children": {
+                    "Research": {
+                        "type": "Department",
+                        "children": {
+                            "Testing": {
+                                "type": "Section",
+                                "children": {
+                                    "Integration Testing": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Compliance Verification": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            },
+                            "Analytics": {
+                                "type": "Section",
+                                "children": {
+                                    "Data Analysis": {
+                                        "type": "Team",
+                                        "children": {}
+                                    },
+                                    "Predictive Modeling": {
+                                        "type": "Team",
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+} 

@@ -1,0 +1,17 @@
+{
+  "game": {
+    "title": "Incremental Game",
+    "score": "Points",
+    "click": {
+      "button": "Click Me!",
+      "upgrade": "Upgrade Click Power"
+    },
+    "upgrades": {
+      "clickPower": {
+        "name": "Click Power",
+        "description": "Increases points per click by {amount}",
+        "cost": "Cost: {amount} points"
+      }
+    }
+  }
+} 
