@@ -1,5 +1,7 @@
 'use client'
 
+import { Z_INDEX } from '../constants/zIndex'
+
 interface CareerBarometerProps {
   level: number
 }
@@ -9,18 +11,16 @@ export function CareerBarometer({ level }: CareerBarometerProps) {
   const bars = Array.from({ length: totalLevels }, (_, i) => totalLevels - i)
 
   return (
-    <div className="p-2">
-      <div id="career-barometer">
-        <div className="relative w-full h-full">
-          <div className="absolute inset-0 rounded-[1rem] border-8 border-game-primary pointer-events-none" />
-          <div className="w-full h-full flex flex-col gap-1">
-            {bars.map((barLevel) => (
-              <div
-                key={barLevel}
-                className={`barometer-cell ${barLevel <= level ? 'barometer-cell-filled' : ''}`}
-              />
-            ))}
-          </div>
+    <div className="h-full p-2" style={{ position: 'relative', zIndex: Z_INDEX.BAROMETER }}>
+      <div id="career-barometer" className="h-full relative">
+        <div className="barometer-border" />
+        <div className="barometer-cell-container">
+          {bars.map((barLevel) => (
+            <div
+              key={barLevel}
+              className={`barometer-cell ${barLevel <= level ? 'barometer-cell-filled' : ''}`}
+            />
+          ))}
         </div>
       </div>
     </div>

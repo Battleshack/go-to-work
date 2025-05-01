@@ -2,15 +2,34 @@
 
 import React from 'react';
 import { useGame } from '@/context/GameContext';
-import { Position } from '@/types/organization';
+import { Position, Organization } from '@/types/organization';
+
+interface AvailableMove {
+  position: Position;
+  cost: number;
+}
 
 export function PositionBrowser() {
   const { state, dispatch } = useGame();
-  const { position, availableMoves, points } = state;
+  const { currentPosition, playerPosition, organization, points } = state;
 
-  if (!position) {
-    return <div>Loading position data...</div>;
+  if (!organization) {
+    return <div>Loading organization data...</div>;
   }
+
+  // Get all positions from all departments in all divisions
+  const allPositions = organization.divisions.flatMap(division => 
+    division.departments.flatMap(dept => dept.positions)
+  );
+
+  // Get available moves based on current position
+  const availableMoves: AvailableMove[] = allPositions.filter(pos => 
+    pos.title !== currentPosition && 
+    (playerPosition?.timeInPosition ?? 0) >= 1 // Require at least 1 year in position
+  ).map(pos => ({
+    position: pos,
+    cost: 100 // Base cost for now, can be adjusted based on level difference etc.
+  }));
 
   const handlePositionChange = (newPosition: Position, cost: number) => {
     dispatch({
@@ -26,13 +45,10 @@ export function PositionBrowser() {
       <div className="mb-6">
         <h3 className="text-lg font-bold mb-2">Current Position</h3>
         <div className="inline-block bg-red-100 border border-red-300 px-3 py-2 rounded">
-          {position.currentPosition.title}
+          {currentPosition}
         </div>
         <div className="mt-2 text-sm text-gray-600">
-          <div>Division: {position.currentPosition.division}</div>
-          <div>Department: {position.currentPosition.department}</div>
-          <div>Salary: ${position.salary.toLocaleString()}</div>
-          <div>Years: {position.yearsInPosition}</div>
+          <div>Time in Position: {playerPosition?.timeInPosition ?? 0} years</div>
         </div>
       </div>
 
@@ -50,9 +66,6 @@ export function PositionBrowser() {
                 <p className="text-sm text-gray-600">
                   {newPosition.division} - {newPosition.department}
                 </p>
-                <p className="text-sm font-semibold">
-                  Salary: ${newPosition.baseSalary.toLocaleString()}
-                </p>
               </div>
               <button
                 onClick={() => handlePositionChange(newPosition, cost)}
@@ -68,24 +81,6 @@ export function PositionBrowser() {
                   Cost: {cost.toLocaleString()} points
                 </div>
               </button>
-            </div>
-
-            <div className="mt-3">
-              <h5 className="text-sm font-semibold">Required Skills:</h5>
-              <ul className="list-disc list-inside">
-                {newPosition.requiredSkills.map((skill) => (
-                  <li
-                    key={skill}
-                    className={`text-sm ${
-                      position.acquiredSkills.includes(skill)
-                        ? 'text-green-600'
-                        : 'text-red-600'
-                    }`}
-                  >
-                    {skill}
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         ))}

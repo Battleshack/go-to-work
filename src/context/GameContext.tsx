@@ -3,11 +3,13 @@
 import React, { createContext, useContext, useReducer, ReactNode, useEffect, Dispatch } from 'react';
 import { Position, PlayerPosition, Organization, SkillGap } from '@/types/organization';
 import { parseOrganizationData, parseSkillGapData, getAvailableMoves } from '@/utils/data';
+import { GAME_CONFIG } from '../constants/gameConfig';
 
 interface UpgradeInfo {
   level: number;
   cost: number;
   unlocked: boolean;
+  baseEffect?: number;
 }
 
 interface GameState {
@@ -22,6 +24,7 @@ interface GameState {
   skillGaps: SkillGap[] | null;
   playerPosition: PlayerPosition | null;
   upgrades: {
+    clickPower: UpgradeInfo;
     autoClicker: UpgradeInfo;
     multiplier: UpgradeInfo;
   };
@@ -37,7 +40,9 @@ type GameAction =
   | { type: 'GAIN_EXPERIENCE'; amount: number }
   | { type: 'SET_ORGANIZATION'; payload: Organization }
   | { type: 'SET_SKILL_GAPS'; payload: SkillGap[] }
-  | { type: 'UPGRADE_CLICK_POWER' };
+  | { type: 'UPGRADE_CLICK_POWER' }
+  | { type: 'UPGRADE_AUTO_CLICKER' }
+  | { type: 'UPGRADE_MULTIPLIER' };
 
 const initialState: GameState = {
   playerLevel: 1,
@@ -51,6 +56,12 @@ const initialState: GameState = {
   skillGaps: null,
   playerPosition: null,
   upgrades: {
+    clickPower: {
+      level: 0,
+      cost: 50,
+      unlocked: true,
+      baseEffect: 1
+    },
     autoClicker: {
       level: 0,
       cost: 100,
@@ -59,7 +70,8 @@ const initialState: GameState = {
     multiplier: {
       level: 0,
       cost: 500,
-      unlocked: false
+      unlocked: false,
+      baseEffect: 0.5
     }
   }
 };
@@ -137,17 +149,51 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         upgrades
       };
     case 'UPGRADE_CLICK_POWER':
-      const upgrade = state.upgrades.multiplier;
-      if (state.money >= upgrade.cost) {
+      const clickPowerUpgrade = state.upgrades.clickPower;
+      if (state.points >= clickPowerUpgrade.cost) {
         return {
           ...state,
-          money: state.money - upgrade.cost,
+          points: state.points - clickPowerUpgrade.cost,
+          upgrades: {
+            ...state.upgrades,
+            clickPower: {
+              ...clickPowerUpgrade,
+              level: clickPowerUpgrade.level + 1,
+              cost: Math.floor(clickPowerUpgrade.cost * 1.5)
+            }
+          }
+        };
+      }
+      return state;
+    case 'UPGRADE_AUTO_CLICKER':
+      const autoClickerUpgrade = state.upgrades.autoClicker;
+      if (state.points >= autoClickerUpgrade.cost) {
+        return {
+          ...state,
+          points: state.points - autoClickerUpgrade.cost,
+          upgrades: {
+            ...state.upgrades,
+            autoClicker: {
+              ...autoClickerUpgrade,
+              level: autoClickerUpgrade.level + 1,
+              cost: Math.floor(autoClickerUpgrade.cost * 1.5)
+            }
+          }
+        };
+      }
+      return state;
+    case 'UPGRADE_MULTIPLIER':
+      const multiplierUpgrade = state.upgrades.multiplier;
+      if (state.points >= multiplierUpgrade.cost) {
+        return {
+          ...state,
+          points: state.points - multiplierUpgrade.cost,
           upgrades: {
             ...state.upgrades,
             multiplier: {
-              ...upgrade,
-              level: upgrade.level + 1,
-              cost: Math.floor(upgrade.cost * 1.5)
+              ...multiplierUpgrade,
+              level: multiplierUpgrade.level + 1,
+              cost: Math.floor(multiplierUpgrade.cost * 1.5)
             }
           }
         };
@@ -215,9 +261,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const addPoints = (amount: number) => {
     dispatch({ type: 'ADD_POINTS', payload: amount });
     
-    // Add money based on level (more money per click at higher levels)
-    const moneyPerPoint = state.playerLevel * 10;
-    dispatch({ type: 'ADD_MONEY', payload: amount * moneyPerPoint });
+    // Calculate money earned using the new formula
+    const startingSalary = GAME_CONFIG.STARTING_SALARY;
+    const moneyEarned = startingSalary + ((startingSalary * (state.playerLevel / 15)) * state.playerLevel);
+    dispatch({ type: 'ADD_MONEY', payload: moneyEarned });
     
     // Add task completion
     dispatch({ type: 'ADD_TASK' });

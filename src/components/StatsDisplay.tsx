@@ -1,38 +1,36 @@
 'use client'
 
+import React from 'react'
 import { useGame } from '@/context/GameContext'
 
 export function StatsDisplay() {
   const { state } = useGame()
 
   return (
-    <div className="flex justify-between items-end w-full h-[116px]">
+    <div className="w-full flex items-end">
       {/* Career Level */}
-      <div className="flex flex-col justify-end">
-        <div className="flex items-baseline">
-          <span className="career-level-text mr-4">LEVEL</span>
-          <span className="career-level-value">{state.playerLevel}</span>
-        </div>
+      <div className="hud-level">
+        <div className="career-level-text">Level {state.playerLevel}</div>
       </div>
 
       {/* Cash */}
-      <div className="flex flex-col justify-end">
+      <div className="hud-money">
         <div className="game-subtitle text-stroke-money leading-[0.8]">
-          $ {state.money.toLocaleString()}
+          {Math.floor(state.money).toLocaleString('no-NO', { maximumFractionDigits: 0 })} NOK
         </div>
       </div>
 
       {/* Points */}
-      <div className="flex flex-col justify-end">
+      <div className="hud-points">
         <div className="game-subtitle text-stroke-points leading-[0.8]">
-          {state.points.toLocaleString()} p
+          {state.points.toLocaleString()} points
         </div>
       </div>
 
       {/* Tasks */}
-      <div className="flex flex-col justify-end">
+      <div className="hud-tasks">
         <div className="game-subtitle text-stroke-tasks leading-[0.8]">
-          {state.tasks} tasks
+          {state.tasks.toLocaleString()} tasks
         </div>
       </div>
     </div>

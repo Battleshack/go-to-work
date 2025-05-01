@@ -20,7 +20,16 @@
   --text-money: #46C97D;
   --text-points: #F0F557;
   --background: linear-gradient(180deg, var(--game-background-start) 0%, var(--game-background-end) 100%);
-  --stats-stroke-thickness: 1rem;
+  --border-thin: 0.125rem;
+  --border-medium: 0.25rem;
+  --border-thick: 0.5rem;
+  --stroke-thin: calc(var(--border-thin) * 2);
+  --stroke-medium: calc(var(--border-medium) * 2);
+  --stroke-thick: calc(var(--border-thick) * 2);
+  --radius-small: 0.75rem;
+  --radius-medium: 1rem;
+  --radius-large: 2rem;
+  --radius-huge: 5rem;
 }
 
 @layer base {
@@ -37,16 +46,56 @@
 }
 
 @layer components {
+  /* HUD Layout Classes */
+  .hud-level {
+    @apply w-1/4 pr-4 flex items-end;
+  }
+  
+  .hud-money {
+    @apply w-1/4 pr-4 flex items-end;
+  }
+  
+  .hud-points {
+    @apply w-1/4 pr-4 flex items-end;
+  }
+  
+  .hud-tasks {
+    @apply w-1/4 flex items-end;
+  }
+
   .game-shadow {
     box-shadow: -3.5rem 1rem 0 0 rgba(7, 80, 87, 0.56);
   }
 
   .game-button {
-    @apply bg-game-secondary border-8 border-game-primary rounded-[5rem] text-game-text transition-all hover:opacity-90 active:scale-95;
+    @apply bg-game-secondary text-game-text transition-all hover:opacity-90 active:scale-95;
+    border: var(--border-thick) solid var(--game-primary);
+    border-radius: var(--radius-huge);
+  }
+
+  .upgrade-button {
+    @apply p-6 game-shadow bg-game-success;
+    position: relative;
+    border: var(--border-thick) solid var(--game-success-dark);
+    border-radius: var(--radius-medium);
+  }
+
+  .upgrade-button:nth-child(1) {
+    z-index: 3;
+  }
+
+  .upgrade-button:nth-child(2) {
+    z-index: 2;
+  }
+
+  .upgrade-button:nth-child(3) {
+    z-index: 1;
   }
 
   .game-card {
-    @apply rounded-2xl p-6 game-shadow;
+    @apply p-6 game-shadow;
+    border: var(--border-thick) solid var(--game-primary);
+    border-radius: var(--radius-medium);
   }
 
   .game-card-promotion {
@@ -62,7 +111,7 @@
   }
 
   .game-subtitle {
-    @apply text-[4rem] font-black leading-none;
+    @apply text-[2rem] font-black leading-none;
   }
 
   .game-text {
@@ -73,11 +122,11 @@
     @apply text-[4.5rem] font-black leading-[0.8];
     font-family: 'Jaro', sans-serif;
     color: var(--game-accent);
-    -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
-    text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+    -webkit-text-stroke: var(--stroke-thick) var(--game-accent-dark);
+    text-stroke: var(--stroke-thick) var(--game-accent-dark);
     paint-order: stroke fill;
     -webkit-paint-order: stroke fill;
-    stroke-width: var(--stats-stroke-thickness);
+    stroke-width: var(--stroke-thick);
     stroke: var(--game-accent-dark);
   }
 
@@ -85,83 +134,104 @@
     @apply text-[6rem] font-black leading-[0.8];
     font-family: 'Jaro', sans-serif;
     color: var(--game-accent);
-    -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
-    text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+    -webkit-text-stroke: var(--stroke-thick) var(--game-accent-dark);
+    text-stroke: var(--stroke-thick) var(--game-accent-dark);
     paint-order: stroke fill;
     -webkit-paint-order: stroke fill;
-    stroke-width: var(--stats-stroke-thickness);
+    stroke-width: var(--stroke-thick);
     stroke: var(--game-accent-dark);
+  }
+
+  #career-barometer {
+    width: 5.25rem;
+    height: 100%;
+    background-color: var(--game-primary);
+    position: relative;
+    border-radius: var(--radius-medium);
+  }
+
+  .barometer-border {
+    position: absolute;
+    inset: 0;
+    border: var(--border-thick) solid var(--game-primary);
+    border-radius: var(--radius-medium);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .barometer-cell-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--border-thin);
+    z-index: 0;
+    padding: 1px;
+  }
+
+  .barometer-cell {
+    flex: 1;
+    min-height: 1rem;
+    border-radius: var(--radius-medium);
+    transition-property: background-color;
+    transition-duration: 300ms;
+    background-color: white;
+  }
+
+  .barometer-cell-filled {
+    background-color: var(--game-secondary);
+  }
+
+  #career-title {
+    padding: 0.75rem 1rem;
+    background-color: #FF521D;
+    border: 0.5rem solid #82001C;
+    border-radius: var(--radius-large);
+    border-top-left-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
   }
 }
 
 /* Text stroke utility classes using paint-order */
 .text-stroke-level {
   color: var(--game-accent);
-  -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
-  text-stroke: var(--stats-stroke-thickness) var(--game-accent-dark);
+  -webkit-text-stroke: var(--stroke-thick) var(--game-accent-dark);
+  text-stroke: var(--stroke-thick) var(--game-accent-dark);
   paint-order: stroke fill;
   -webkit-paint-order: stroke fill;
-  stroke-width: var(--stats-stroke-thickness);
+  stroke-width: var(--stroke-thick);
   stroke: var(--game-accent-dark);
 }
 
 .text-stroke-money {
   color: var(--game-success);
-  -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-success-dark);
-  text-stroke: var(--stats-stroke-thickness) var(--game-success-dark);
+  -webkit-text-stroke: var(--stroke-thick) var(--game-success-dark);
+  text-stroke: var(--stroke-thick) var(--game-success-dark);
   paint-order: stroke fill;
   -webkit-paint-order: stroke fill;
-  stroke-width: var(--stats-stroke-thickness);
+  stroke-width: var(--stroke-thick);
   stroke: var(--game-success-dark);
 }
 
 .text-stroke-points {
   color: var(--game-warning);
-  -webkit-text-stroke: var(--stats-stroke-thickness) #6C4E1E;
-  text-stroke: var(--stats-stroke-thickness) #6C4E1E;
+  -webkit-text-stroke: var(--stroke-thick) #6C4E1E;
+  text-stroke: var(--stroke-thick) #6C4E1E;
   paint-order: stroke fill;
   -webkit-paint-order: stroke fill;
-  stroke-width: var(--stats-stroke-thickness);
+  stroke-width: var(--stroke-thick);
   stroke: #6C4E1E;
 }
 
 .text-stroke-tasks {
   color: var(--game-secondary);
-  -webkit-text-stroke: var(--stats-stroke-thickness) var(--game-primary);
-  text-stroke: var(--stats-stroke-thickness) var(--game-primary);
+  -webkit-text-stroke: var(--stroke-thick) var(--game-primary);
+  text-stroke: var(--stroke-thick) var(--game-primary);
   paint-order: stroke fill;
   -webkit-paint-order: stroke fill;
-  stroke-width: var(--stats-stroke-thickness);
+  stroke-width: var(--stroke-thick);
   stroke: var(--game-primary);
 }
-
-#career-title {
-  padding: 0.75rem 1rem;
-  background-color: #FF521D;
-  border: 0.5rem solid #82001C;
-  border-radius: 2rem;
-  border-top-left-radius: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: fit-content;
-}
-
-#career-barometer {
-  width: 5.25rem;
-  height: 43rem;
-  background-color: var(--game-primary);
-  border-radius: 1rem;
-}
-
-.barometer-cell {
-  flex: 1;
-  border-radius: 1rem;
-  transition-property: background-color;
-  transition-duration: 300ms;
-  background-color: white;
-}
-
-.barometer-cell-filled {
-  background-color: var(--game-secondary);
-} 

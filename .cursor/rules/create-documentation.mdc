@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You will make and maintain a set of documentation files in .md format under /docs.
+
+When I explain game concepts and interface elements, you will append this information to the documentation. 
+
+Game concepts may include, but are not limited to, game rules, player stats, game theme, game story and lore, game content and game mechanics.
+Interface elements may include, but are not limited to, input interface, styles, colors and compostion, usability, interaction, text and fonts.
+
+You will append this information to a set of documents in /docs. Find the most fitting document file and add the new information. 
+If there is no fitting document, create a new file. 
+
+If there is conflicting information in a previous version, make a redaction and make a note of the changes to a new line in /docs/logg.md

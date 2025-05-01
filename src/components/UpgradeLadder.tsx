@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useGame } from '@/context/GameContext';
+import { Z_INDEX } from '../../app/constants/zIndex'
 
 interface UpgradeButtonProps {
   name: string;
@@ -11,12 +12,13 @@ interface UpgradeButtonProps {
   unlocked: boolean;
   canAfford: boolean;
   onClick: () => void;
+  zIndex?: number;
 }
 
-function UpgradeButton({ name, description, cost, level, unlocked, canAfford, onClick }: UpgradeButtonProps) {
+function UpgradeButton({ name, description, cost, level, unlocked, canAfford, onClick, zIndex }: UpgradeButtonProps) {
   if (!unlocked) {
     return (
-      <div className="bg-gray-800 p-4 rounded-lg opacity-50">
+      <div className="upgrade-button bg-gray-800 p-4 rounded-lg opacity-50" style={{ position: 'relative', zIndex }}>
         <div className="text-gray-400">???</div>
         <div className="text-xs text-gray-500">Unlock at higher level</div>
       </div>
@@ -27,8 +29,9 @@ function UpgradeButton({ name, description, cost, level, unlocked, canAfford, on
     <button
       onClick={onClick}
       disabled={!canAfford}
+      style={{ position: 'relative', zIndex }}
       className={`
-        w-full p-4 rounded-lg text-left transition-all duration-200
+        upgrade-button w-full p-4 rounded-lg text-left transition-all duration-200
         ${canAfford 
           ? 'bg-game-secondary hover:bg-game-secondary/90 cursor-pointer' 
           : 'bg-gray-700 cursor-not-allowed'}
@@ -50,9 +53,10 @@ function UpgradeButton({ name, description, cost, level, unlocked, canAfford, on
 
 export function UpgradeLadder() {
   const { state, dispatch } = useGame();
+  const baseZIndex = Z_INDEX.UPGRADES;
 
   return (
-    <div>
+    <div style={{ position: 'relative', zIndex: baseZIndex }}>
       <h2 className="text-xl font-bold text-white mb-4 text-center">Upgrades</h2>
       <div className="flex gap-4">
         <UpgradeButton
@@ -63,6 +67,7 @@ export function UpgradeLadder() {
           unlocked={state.upgrades.clickPower.unlocked}
           canAfford={state.points >= state.upgrades.clickPower.cost}
           onClick={() => dispatch({ type: 'UPGRADE_CLICK_POWER' })}
+          zIndex={baseZIndex + 3}
         />
 
         <UpgradeButton
@@ -73,6 +78,7 @@ export function UpgradeLadder() {
           unlocked={state.upgrades.autoClicker.unlocked}
           canAfford={state.points >= state.upgrades.autoClicker.cost}
           onClick={() => dispatch({ type: 'UPGRADE_AUTO_CLICKER' })}
+          zIndex={baseZIndex + 2}
         />
 
         <UpgradeButton
@@ -83,6 +89,7 @@ export function UpgradeLadder() {
           unlocked={state.upgrades.multiplier.unlocked}
           canAfford={state.points >= state.upgrades.multiplier.cost}
           onClick={() => dispatch({ type: 'UPGRADE_MULTIPLIER' })}
+          zIndex={baseZIndex + 1}
         />
       </div>
     </div>

@@ -1,0 +1,11 @@
+export const Z_INDEX = {
+  BACKGROUND: -1,
+  BASE: 0,
+  BAROMETER: 5,
+  OPPORTUNITIES: 7,
+  OVERLAY: 10,
+  MODAL: 20,
+  TOOLTIP: 30,
+  DROPDOWN: 40,
+  NOTIFICATION: 50
+} as const; 
